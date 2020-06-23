@@ -5,6 +5,8 @@
 *.so
 *.dylib
 
+eureka_tool
+
 # Test binary, built with `go test -c`
 *.test
 
