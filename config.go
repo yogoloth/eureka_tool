@@ -84,7 +84,6 @@ func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
 		flagset.IntVar(&config.port, "port", 8080, "port is int, it must have")
 		flagset.IntVar(&config.ttl, "ttl", 30, "ttl default 30")
 		flagset.StringVar(&config.eureka_addr, "eureka-addr", "", "eureka_addr is string, it must have")
-		config.eureka_addr = config.format_eureka_addr(config.eureka_addr)
 		return flagset
 	case "unregister", "heartbeat":
 		flagset := flag.NewFlagSet(action, flag.ExitOnError)
@@ -97,7 +96,6 @@ func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
 		flagset.IntVar(&config.port, "port", 8080, "port is int, ip:port is instanceid")
 		flagset.StringVar(&config.eureka_addr, "eureka-addr", "", "eureka_addr is string, it must have")
 		flagset.StringVar(&config.instanceid, "instanceid", "", "instanceid is combined by ip:port, it‘s priorityo higher than ip:port")
-		config.eureka_addr = config.format_eureka_addr(config.eureka_addr)
 		return flagset
 	}
 	return nil

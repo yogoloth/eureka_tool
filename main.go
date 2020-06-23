@@ -15,6 +15,8 @@ func main() {
 	app := config.app
 	ip := config.ip
 	port := config.port
+	config.eureka_addr = config.format_eureka_addr(config.eureka_addr)
+
 	eureka_addr := config.eureka_addr
 	hostname := config.hostname
 	fmt.Printf("%v\n", config)
