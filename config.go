@@ -23,7 +23,7 @@ const usage1 = `Usage:
   %s %s --app [app] --ip [ip] --port [port] --eureka-addr [eureka_addr] [--hostname hostname] --ttl [ttl]
   
   Example:
-    eureka_tool sidecar --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30
+    eureka_tool sidecar --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30
 
 `
 const usage2 = `Usage:
@@ -31,9 +31,9 @@ const usage2 = `Usage:
   %s %s --app app [--ip ip --port port | --instanceid instanceid] --eureka-addr eureka_addr
   
   Example:
-    eureka_tool unregister --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka
+    eureka_tool unregister --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka
 	or
-	eureka_tool unregister --app hu_user --instanceid 172.16.9.17:8080 --eureka-addr http://192.168.240.10:30761/eureka
+	eureka_tool unregister --app hu-user --instanceid 172.16.9.17:8080 --eureka-addr http://192.168.240.10:30761/eureka
 	
 `
 
@@ -46,6 +46,20 @@ type ActionConfig struct {
 	port        int
 	ttl         int
 	eureka_addr string
+}
+
+func (config *ActionConfig) format_eureka_addr(eureka_addr_string string) string {
+	b := strings.Split(eureka_addr_string, ",")
+	new_addr := ""
+	for i, d := range b {
+		if i == 0 {
+			new_addr = strings.TrimRight(d, "/")
+		} else {
+			new_addr = new_addr + "," + strings.TrimRight(d, "/")
+		}
+	}
+	return new_addr
+
 }
 
 func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
@@ -70,6 +84,7 @@ func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
 		flagset.IntVar(&config.port, "port", 8080, "port is int, it must have")
 		flagset.IntVar(&config.ttl, "ttl", 30, "ttl default 30")
 		flagset.StringVar(&config.eureka_addr, "eureka-addr", "", "eureka_addr is string, it must have")
+		config.eureka_addr = config.format_eureka_addr(config.eureka_addr)
 		return flagset
 	case "unregister", "heartbeat":
 		flagset := flag.NewFlagSet(action, flag.ExitOnError)
@@ -82,6 +97,7 @@ func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
 		flagset.IntVar(&config.port, "port", 8080, "port is int, ip:port is instanceid")
 		flagset.StringVar(&config.eureka_addr, "eureka-addr", "", "eureka_addr is string, it must have")
 		flagset.StringVar(&config.instanceid, "instanceid", "", "instanceid is combined by ip:port, it‘s priorityo higher than ip:port")
+		config.eureka_addr = config.format_eureka_addr(config.eureka_addr)
 		return flagset
 	}
 	return nil
