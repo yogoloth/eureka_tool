@@ -27,7 +27,7 @@ func main() {
 	//eureka_addr := "http://192.168.240.10:30761/eureka"
 	//hostname := ip
 
-	instance := NewInstance(hostname, app, ip, port, 30, false)
+	instance := NewInstance(hostname, app, ip, port, 30, false, &config.homepage_url, &config.healthcheck_url)
 
 	var myClient *EurekaClient
 	if c, err := NewClient(eureka_addr, instance); err != nil {

@@ -31,21 +31,22 @@ const usage2 = `Usage:
   %s %s --app app [--ip ip --port port | --instanceid instanceid] --eureka-addr eureka_addr
   
   Example:
-    eureka_tool unregister --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka
+    eureka_tool unregister --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--healthcheck url] [--homepage url]
 	or
-	eureka_tool unregister --app hu-user --instanceid 172.16.9.17:8080 --eureka-addr http://192.168.240.10:30761/eureka
-	
+	eureka_tool unregister --app hu-user --instanceid 172.16.9.17:8080 --eureka-addr http://192.168.240.10:30761/eureka [--healthcheck url] [--homepage url]
 `
 
 type ActionConfig struct {
-	action      string
-	app         string
-	ip          string
-	hostname    string
-	instanceid  string
-	port        int
-	ttl         int
-	eureka_addr string
+	action          string
+	app             string
+	ip              string
+	hostname        string
+	instanceid      string
+	port            int
+	ttl             int
+	eureka_addr     string
+	homepage_url    string
+	healthcheck_url string
 }
 
 func (config *ActionConfig) format_eureka_addr(eureka_addr_string string) string {
@@ -84,6 +85,8 @@ func (config *ActionConfig) SetUpFlagSet(action string) *flag.FlagSet {
 		flagset.IntVar(&config.port, "port", 8080, "port is int, it must have")
 		flagset.IntVar(&config.ttl, "ttl", 30, "ttl default 30")
 		flagset.StringVar(&config.eureka_addr, "eureka-addr", "", "eureka_addr is string, it must have")
+		flagset.StringVar(&config.homepage_url, "homepage", "", "homepage addr is string, opt")
+		flagset.StringVar(&config.healthcheck_url, "healthcheck", "", "healthcheck addr is string, opt")
 		return flagset
 	case "unregister", "heartbeat":
 		flagset := flag.NewFlagSet(action, flag.ExitOnError)
