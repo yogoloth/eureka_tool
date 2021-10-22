@@ -23,7 +23,7 @@ const usage1 = `Usage:
   %s %s --app [app] --ip [ip] --port [port] --eureka-addr [eureka_addr] [--hostname hostname] --ttl [ttl]
   
   Example:
-    eureka_tool sidecar --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30
+    eureka_tool sidecar --app hu-user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30 [--healthcheck url] 
 
 `
 const usage2 = `Usage:
