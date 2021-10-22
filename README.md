@@ -7,9 +7,9 @@
 
 # Example:
 
-    eureka_tool register --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30
+    eureka_tool register --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30 [--healthcheck url]
 
-    eureka_tool sidecar --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30
+    eureka_tool sidecar --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka [--hostname 172.16.9.17] --ttl 30 [--healthcheck url]
 
     eureka_tool unregister --app hu_user --ip 172.16.9.17 --port 8080 --eureka-addr http://192.168.240.10:30761/eureka
 
